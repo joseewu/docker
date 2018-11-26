@@ -2,20 +2,20 @@ const { MongoClient, ObjectID } = require('mongodb');
 const { isArray, isObject } = require('util');
 
 const connect = MongoClient.connect;
-const url = 'mongodb://mongodb:27017';
+const url = 'mongodb://mongodb:27017'; //指定service name 非
 const dbName = 'database';
 
 const self = module.exports = {
     init: async () => {
         try
         {
-            this.client = await connect(url, { useNewUrlParser: true });
+            this.client = await connect(url, { useNewUrlParser: true }); // 後面不知道是什麼
             this.db = this.client.db(dbName);
-            console.log("connect suc");
+            console.log("connection success");
         }
         catch (e)
         {
-            console.log("connect err ", e);
+            console.log("connection error ", e);
         }
     },
 
@@ -28,6 +28,7 @@ const self = module.exports = {
      *                                   	limitNumber : 20
      *                                   	sort : {
      *                                   		_id : -1
+                                            _kkk : j // wrong
      *                                   	}
      *                                   }
      */
@@ -40,6 +41,7 @@ const self = module.exports = {
         // one record data
        if (undefined !== query && isObject(query) && Object.keys(query).length > 0)
        {
+
            if (query.hasOwnProperty('_id'))
            {
                query._id = new ObjectID(query._id);
@@ -58,7 +60,7 @@ const self = module.exports = {
        if (undefined === sort || !isObject(sort))
        {
            sort = {
-               _id: -1
+               _id: -1 //assending
            };
        }
        else
@@ -70,6 +72,7 @@ const self = module.exports = {
        }
 
        const collection = this.db.collection(_collection);
+       console.log(collection.find(query).skip(skipNumber).limit(limitNumber).sort(sort).toArray());
        return await collection.find(query).skip(skipNumber).limit(limitNumber).sort(sort).toArray();
     },
 
@@ -79,11 +82,10 @@ const self = module.exports = {
             try
             {
                 const collection = this.db.collection(_collection);
-                const res = await collection.insertMany(data);
-
+                const result = await collection.insertMany(data);
                 resolve({
-                    result: res.result,
-                    insertedIds: res.insertedIds
+                    result: result.result,
+                    insertedIds: result.insertedIds
                 });
             }
             catch (e)

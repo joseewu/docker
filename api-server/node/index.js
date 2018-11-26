@@ -20,7 +20,7 @@ app.get('/api/get', async (req, res) => {
             data: result
         });
     }
-    catch (e)
+    catch (error)
     {
         res.json({
             status: false,
@@ -39,7 +39,7 @@ app.post('/api/post', async (req, res) => {
             data: result
         });
     }
-    catch (e)
+    catch (error)
     {
         res.json({
             status: false,
