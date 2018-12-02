@@ -98,17 +98,17 @@ const self = module.exports = {
     update : (document, updateWhere, data) => {
 
         return new Promise(async (resolve, reject) => {
-          try
+            try
           {
-            const collection = this.db.collection(document);
-            const result = await collection.updateMany(updateWhere, { $set: data });
-            console.log(result);
-            resolve();
+              const collection = this.db.collection(document);
+              const result = await collection.updateMany(updateWhere, { $set: data });
+              console.log(result);
+              resolve();
           }
           catch (error)
           {
-            console.log(error);
-            reject(false);
+              console.log(error);
+              reject(false);
           }
         });
     },
