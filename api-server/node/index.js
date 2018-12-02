@@ -49,7 +49,7 @@ app.post('/api/post', async (req, res) => {
 });
 app.delete('/api/deleteUser/:id', async (req, res) => {
     const body = req.body;
-    const result = await dbObj.delete(key: ?)
+    const result = await dbObj.delete(body)
 
 
 })

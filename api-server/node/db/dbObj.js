@@ -118,7 +118,7 @@ const self = module.exports = {
         try
         {
             const collection = this.db.collection(document);
-            const result = await collection.deleteOne(updateWhere);
+            const result = await collection.deleteOne(deleteWhere);
             console.log(result);
             resolve();
         }
