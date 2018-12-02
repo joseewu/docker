@@ -11,11 +11,11 @@ const self = module.exports = {
         {
             this.client = await connect(url, { useNewUrlParser: true });
             this.db = this.client.db(dbName);
-            console.log("connect suc");
+            console.log("connect success");
         }
-        catch (e)
+        catch (error)
         {
-            console.log("connect err ", e);
+            console.log("mongodb connection error; ", error);
         }
     },
 
@@ -95,18 +95,38 @@ const self = module.exports = {
         });
     },
 
-    update : (document, where, data) => {
+    update : (document, updateWhere, data) => {
 
         return new Promise(async (resolve, reject) => {
-            // const collection = this.db.collection(document);
-            // const res = await collection.updateMany(where, { $set: data });
-
-            // console.log(res);
+          try
+          {
+            const collection = this.db.collection(document);
+            const result = await collection.updateMany(updateWhere, { $set: data });
+            console.log(result);
             resolve();
+          }
+          catch (error)
+          {
+            console.log(error);
+            reject(false);
+          }
         });
-    }
+    },
 
-    // delete: () => {
-    //
-    // }
+    delete: (document, deleteWhere) => {
+      return new Promise(async (resolve, reject) => {
+        try
+        {
+            const collection = this.db.collection(document);
+            const result = await collection.deleteOne(updateWhere);
+            console.log(result);
+            resolve();
+        }
+        catch (error)
+        {
+            console.log(error);
+            reject(error)
+        }
+      });
+    }
 };

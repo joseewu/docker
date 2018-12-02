@@ -33,7 +33,7 @@ app.post('/api/post', async (req, res) => {
     try
     {
         const result = await dbObj.insert('test', req.body);
-
+        //return insert result
         res.json({
             status: true,
             data: result
@@ -47,11 +47,17 @@ app.post('/api/post', async (req, res) => {
         });
     }
 });
+app.delete('/api/deleteUser/:id', async (req, res) => {
+    const body = req.body;
+    const result = await dbObj.delete(key: ?)
 
+
+})
 app.put('/api/put', async (req, res) => {
 
     const body = req.body;
-    const result = await dbObj.update('test', body, { age: 25 });
+    const query =  { id: body.id }
+    const result = await dbObj.update('test', query, body);
 
     if (!result)
     {
